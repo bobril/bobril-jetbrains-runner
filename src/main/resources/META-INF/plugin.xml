@@ -1,0 +1,21 @@
+<idea-plugin url="http://github.com/bobril/bobril-jetbrains">
+    <id>bobril-jetbrains</id>
+    <version>1.0-SNAPSHOT</version>
+    <name>Bobril JetBrains</name>
+    <vendor email="base.michal@gmail.com" url="https://github.com/bobril">Bobril</vendor>
+
+    <description><![CDATA[
+    Plugin for Bobril. It provides Bobril build run configuration and tool window to view build results.
+    ]]></description>
+
+    <depends>com.intellij.modules.lang</depends>
+    <extensions defaultExtensionNs="com.intellij">
+        <applicationService serviceInterface="services.BbService" serviceImplementation="services.impl.BbServiceImpl"/>
+        <configurationType implementation="configuration.BbRunConfigurationType"/>
+        <toolWindow id="Bobril Build Tools" secondary="true" icon="/images/bobril-small.png" anchor="bottom" factoryClass="tools.BbToolsFactory"/>
+    </extensions>
+
+    <actions>
+
+    </actions>
+</idea-plugin>
