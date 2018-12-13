@@ -44,7 +44,7 @@ public class BbTools {
     public void setProject(Project project) {
         Arrays.stream(errorsList.getListSelectionListeners()).forEach( l -> errorsList.removeListSelectionListener(l));
         errorsList.addMouseListener(new ErrorListClickListener(project, errorsListModel, errorsList));
-        testsList.addMouseListener(new TestsListSelectionListener(project, testsListModel, testsList));
+        testsList.addMouseListener(new TestsListSelectionListener(project, testsList));
     }
 
     public void setCompileStarted() {

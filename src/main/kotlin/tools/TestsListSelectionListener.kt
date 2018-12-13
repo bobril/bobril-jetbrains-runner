@@ -6,11 +6,10 @@ import javax.swing.JList
 
 class TestsListSelectionListener(
     private val project: Project,
-    private val testsListModel: TestsListModel,
-    private val list: JList<String>): MouseClickedListener<String>(list) {
+    private val list: JList<SuiteWithStack>): MouseClickedListener<SuiteWithStack>(list) {
 
     override fun onClick(e: MouseEvent) {
-        val failureStack = testsListModel.getFailureStack(list.selectedIndex)?: return
+        val failureStack = list.selectedValue?.testStackData?: return
 
         println("Clicked:" + list.selectedIndex + "-" + failureStack.fileName)
 
