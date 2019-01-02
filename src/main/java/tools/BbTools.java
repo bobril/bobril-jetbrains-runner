@@ -1,12 +1,22 @@
 package tools;
 
+import com.intellij.ide.BrowserUtil;
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.project.Project;
+import com.intellij.ui.ClickListener;
 import com.intellij.ui.JBColor;
+import com.intellij.util.ui.JBUI;
 import configuration.connection.data.AgentData;
 import configuration.connection.data.CompilationFinishedData;
+import org.jetbrains.annotations.NotNull;
 import services.BbService;
+import tools.listeners.ErrorListClickListener;
+import tools.listeners.MouseClickedListener;
+import tools.listeners.TestsListSelectionListener;
+
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.MouseEvent;
 import java.util.Arrays;
 
 public class BbTools {
@@ -26,9 +36,12 @@ public class BbTools {
     private JScrollPane testsListScrollPane;
     private JLabel buildState;
     private JLabel testState;
+    private JButton openButton;
+    private JButton bbButton;
+    private JButton testsButton;
     private ErrorListModel errorsListModel = new ErrorListModel();
     private TestsListModel testsListModel = new TestsListModel();
-
+    private String bobrilUrl = null;
 
     public BbTools() {
         BbService bbService = ServiceManager.getService(BbService.class);
@@ -38,7 +51,14 @@ public class BbTools {
         errorListScrollPane.setVisible(false);
         testsPanel.setVisible(false);
         testsList.setModel(testsListModel);
+        this.addToolbarButtonsListeners();
+    }
 
+    public void setBobrilUrl(String url) {
+        this.bobrilUrl = url;
+        this.openButton.setEnabled(true);
+        this.bbButton.setEnabled(true);
+        this.testsButton.setEnabled(true);
     }
 
     public void setProject(Project project) {
@@ -103,5 +123,36 @@ public class BbTools {
 
     public JPanel getContent() {
         return mainContent;
+    }
+
+    private void addToolbarButtonsListeners() {
+        BbTools bbTools = this;
+
+        openButton.addMouseListener(new MouseClickedListener() {
+            @Override
+            public void onClick(@NotNull MouseEvent e) {
+                if (bbTools.bobrilUrl != null) {
+                    BrowserUtil.browse(bbTools.bobrilUrl);
+                }
+            }
+        });
+
+        bbButton.addMouseListener(new MouseClickedListener() {
+            @Override
+            public void onClick(@NotNull MouseEvent e) {
+                if (bbTools.bobrilUrl != null) {
+                    BrowserUtil.browse(bbTools.bobrilUrl + "bb");
+                }
+            }
+        });
+
+        testsButton.addMouseListener(new MouseClickedListener() {
+            @Override
+            public void onClick(@NotNull MouseEvent e) {
+                if (bbTools.bobrilUrl != null) {
+                    BrowserUtil.browse(bbTools.bobrilUrl + "test.html");
+                }
+            }
+        });
     }
 }

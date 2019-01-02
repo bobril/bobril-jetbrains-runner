@@ -36,6 +36,8 @@ class BbProcessListener(private val project: Project): ProcessListener {
         println("onTextAvailable : ${event.text}")
         val matcher = PATTERN.matcher(event.text)
         if (matcher.find()) {
+            val bbService = ServiceManager.getService(BbService::class.java)
+            bbService?.getBbTools()?.setBobrilUrl(matcher.group(0))
             val bbClient = BbClient("${matcher.group(0)}bb/api/main")
             this.bbClient = bbClient
             bbMessageHandler.handleClient(bbClient)
