@@ -24,6 +24,6 @@ class BbRunConfigurationType : ConfigurationType {
     }
 
     override fun getConfigurationFactories(): Array<ConfigurationFactory> {
-        return arrayOf<ConfigurationFactory>(BbConfigurationFactory(this));
+        return arrayOf(BbConfigurationFactory(this))
     }
 }

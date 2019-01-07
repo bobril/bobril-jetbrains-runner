@@ -10,22 +10,17 @@ import org.jetbrains.annotations.NotNull
 import services.BbService
 
 class BbRunConfiguration(project: Project, factory: ConfigurationFactory, name: String) : RunConfigurationBase<String>(project, factory, name) {
-
+    var customProjectRoot: String? = null
 
     @NotNull
-    override fun getConfigurationEditor(): SettingsEditor<out RunConfiguration> {
+    override fun getConfigurationEditor(): SettingsEditor<out BbRunConfiguration> {
         return BbSettingsEditor()
-    }
-
-    @Throws(RuntimeConfigurationException::class)
-    override fun checkConfiguration() {
-
     }
 
     override fun getState(executor: Executor, executionEnvironment: ExecutionEnvironment): RunProfileState? {
         val bbService: BbService = ServiceManager.getService(BbService::class.java)?: return null
         bbService.getBbTools()?.setProject(project)
 
-        return BbRunProfileState(executionEnvironment, project)
+        return BbRunProfileState(executionEnvironment, project, this)
     }
 }
