@@ -265,6 +265,15 @@
               <toolTipText value="Open tests page in browser"/>
             </properties>
           </component>
+          <component id="47e7d" class="javax.swing.JButton" binding="newTestsThreadButton">
+            <constraints/>
+            <properties>
+              <enabled value="false"/>
+              <icon value="runConfigurations/testFailed.png"/>
+              <text value=""/>
+              <toolTipText value="Open bb/test to run new thread"/>
+            </properties>
+          </component>
         </children>
       </toolbar>
     </children>

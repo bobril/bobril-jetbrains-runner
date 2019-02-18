@@ -3,9 +3,7 @@ package tools;
 import com.intellij.ide.BrowserUtil;
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.project.Project;
-import com.intellij.ui.ClickListener;
 import com.intellij.ui.JBColor;
-import com.intellij.util.ui.JBUI;
 import configuration.connection.data.AgentData;
 import configuration.connection.data.CompilationFinishedData;
 import org.jetbrains.annotations.NotNull;
@@ -13,9 +11,7 @@ import services.BbService;
 import tools.listeners.ErrorListClickListener;
 import tools.listeners.MouseClickedListener;
 import tools.listeners.TestsListSelectionListener;
-
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.util.Arrays;
 
@@ -39,6 +35,7 @@ public class BbTools {
     private JButton openButton;
     private JButton bbButton;
     private JButton testsButton;
+    private JButton newTestsThreadButton;
     private ErrorListModel errorsListModel = new ErrorListModel();
     private TestsListModel testsListModel = new TestsListModel();
     private String bobrilUrl = null;
@@ -59,6 +56,7 @@ public class BbTools {
         this.openButton.setEnabled(true);
         this.bbButton.setEnabled(true);
         this.testsButton.setEnabled(true);
+        this.newTestsThreadButton.setEnabled(true);
     }
 
     public void setProject(Project project) {
@@ -154,5 +152,15 @@ public class BbTools {
                 }
             }
         });
+
+        newTestsThreadButton.addMouseListener(new MouseClickedListener() {
+            @Override
+            public void onClick(@NotNull MouseEvent e) {
+                if (bbTools.bobrilUrl != null) {
+                    BrowserUtil.browse(bbTools.bobrilUrl + "bb/test");
+                }
+            }
+        });
+
     }
 }

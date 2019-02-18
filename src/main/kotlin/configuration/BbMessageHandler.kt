@@ -47,7 +47,7 @@ class BbMessageHandler(private val project: Project) {
         val file = LocalFileSystem.getInstance().findFileByIoFile(File(data.fn))
         if (file != null) {
             ApplicationManager.getApplication().invokeAndWait({
-                OpenFileDescriptor(project, file).navigate(true)
+                OpenFileDescriptor(project, file, data.pos[0] - 1, data.pos[1] - 1).navigate(true)
             }, ModalityState.NON_MODAL)
         }
     }
