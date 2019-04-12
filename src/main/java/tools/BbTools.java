@@ -4,6 +4,7 @@ import com.intellij.ide.BrowserUtil;
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.ui.JBColor;
+import configuration.BbRunConfiguration;
 import configuration.connection.data.AgentData;
 import configuration.connection.data.CompilationFinishedData;
 import org.jetbrains.annotations.NotNull;
@@ -11,6 +12,7 @@ import services.BbService;
 import tools.listeners.ErrorListClickListener;
 import tools.listeners.MouseClickedListener;
 import tools.listeners.TestsListSelectionListener;
+
 import javax.swing.*;
 import java.awt.event.MouseEvent;
 import java.util.Arrays;
@@ -39,6 +41,7 @@ public class BbTools {
     private ErrorListModel errorsListModel = new ErrorListModel();
     private TestsListModel testsListModel = new TestsListModel();
     private String bobrilUrl = null;
+    private BbRunConfiguration configuration = null;
 
     public BbTools() {
         BbService bbService = ServiceManager.getService(BbService.class);
@@ -161,6 +164,5 @@ public class BbTools {
                 }
             }
         });
-
     }
 }

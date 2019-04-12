@@ -10,7 +10,7 @@ import services.BbService
 import java.util.*
 import java.util.regex.Pattern
 
-class BbProcessListener(private val project: Project): ProcessListener {
+class BbProcessListener(project: Project): ProcessListener {
     private val bbMessageHandler = BbMessageHandler(project)
     private val bbService: BbService = ServiceManager.getService(BbService::class.java)
     private var timer: Timer? = null

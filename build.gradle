@@ -4,8 +4,8 @@ plugins {
     id 'org.jetbrains.kotlin.jvm' version '1.3.0'
 }
 
-group 'com.mbase'
-version '1.0-SNAPSHOT'
+group 'com.bobril'
+version '0.0.1'
 
 sourceCompatibility = 1.8
 
@@ -26,9 +26,16 @@ compileTestKotlin {
     kotlinOptions.jvmTarget = "1.8"
 }
 intellij {
-    version '2018.3'
+    version '2019.1'
+    pluginName 'bobril-jetbrains'
+    intellij.updateSinceUntilBuild false //Disables updating since-build attribute in plugin.xml
 }
 patchPluginXml {
     changeNotes """
       Initial version"""
+}
+
+publishPlugin {
+    username intellijPublishUsername
+    password intellijPublishPassword
 }

@@ -12,10 +12,10 @@ import java.util.regex.Pattern
 class FileFilter(private val project: Project) : RegexpFilter(project, CONSOLE_FILTER_REGEXP) {
     private val filePatter = Pattern.compile("([0-9 a-z_A-Z./]+)\\((\\d+),(\\d+)\\)", Pattern.MULTILINE)
 
-    override fun applyFilter(line: String?, entireLength: Int): Filter.Result? {
+    override fun applyFilter(line: String, entireLength: Int): Filter.Result? {
 
         val matcher = filePatter.matcher(line)
-        if (!matcher.find() || line == null) {
+        if (!matcher.find()) {
             return null
         }
 

@@ -1,7 +1,6 @@
 <idea-plugin url="http://github.com/bobril/bobril-jetbrains">
     <id>bobril-jetbrains</id>
     <name>Bobril JetBrains</name>
-    <idea-version since-build="191"/>
     <vendor email="base.michal@gmail.com" url="https://github.com/bobril">Bobril</vendor>
 
     <description><![CDATA[
@@ -14,4 +13,8 @@
         <configurationType implementation="configuration.BbRunConfigurationType"/>
         <toolWindow id="Bobril Build Tools" secondary="true" icon="/images/bobril-small.png" anchor="bottom" factoryClass="tools.BbToolsFactory"/>
     </extensions>
+
+    <actions>
+
+    </actions>
 </idea-plugin>
