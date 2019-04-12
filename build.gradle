@@ -32,7 +32,10 @@ intellij {
 }
 patchPluginXml {
     changeNotes """
-      Initial version"""
+      * Created bobril build run configuration
+      * Created tools window with result from build and tests
+      * Click from build result navigate to code in IDE
+       """
 }
 
 publishPlugin {
