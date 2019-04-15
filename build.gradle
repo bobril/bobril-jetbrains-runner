@@ -27,7 +27,7 @@ compileTestKotlin {
 }
 intellij {
     version '2019.1'
-    pluginName 'bobril-jetbrains'
+    pluginName 'bobril-runner'
     intellij.updateSinceUntilBuild false //Disables updating since-build attribute in plugin.xml
 }
 patchPluginXml {
