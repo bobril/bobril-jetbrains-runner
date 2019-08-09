@@ -7,16 +7,12 @@ import configuration.connection.BbClient
 import java.io.File
 import com.intellij.openapi.application.ModalityState
 import com.intellij.openapi.application.ApplicationManager
-import com.intellij.openapi.components.ServiceManager
 import configuration.connection.data.AgentData
 import configuration.connection.data.CompilationFinishedData
 import configuration.connection.data.FocusPlaceData
-import services.BbService
 
 
 class BbMessageHandler(private val project: Project) {
-    private val bbService: BbService = ServiceManager.getService(BbService::class.java)
-
     fun handleClient(bbClient: BbClient) {
         bbClient.addOnCompilationStarted { onCompilationStarted() }
         bbClient.addOnCompilationFinished { onCompilationFinished(it) }
@@ -25,20 +21,14 @@ class BbMessageHandler(private val project: Project) {
     }
 
     private fun onCompilationStarted() {
-        val bbTools = bbService.getBbTools()?: return
-        bbTools.setCompileStarted()
         println("CompilationStarted")
     }
 
     private fun onCompilationFinished(data: CompilationFinishedData) {
-        val bbTools = bbService.getBbTools()?: return
-        bbTools.setCompilationFinished(data)
         println("CompilationFinished")
     }
 
     private fun onTestUpdated(agentData: AgentData) {
-        val bbTools = bbService.getBbTools()?: return
-        bbTools.setTestUpdatedFinished(agentData)
         println("TestUpdated")
     }
 
