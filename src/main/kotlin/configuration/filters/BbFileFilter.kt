@@ -13,11 +13,6 @@ class BbFileFilter(private val project: Project) : RegexpFilter(project,
     CONSOLE_FILTER_REGEXP
 ) {
     private val filePatter = Pattern.compile("([0-9 \\- a-z_A-Z./]+)\\((\\d+),(\\d+)\\)", Pattern.MULTILINE)
-    private val semanticCheckPattern = Pattern.compile("Semantic check done", Pattern.MULTILINE)
-    private val BuildErrorsPattern = Pattern.compile("(\\d+)(?= errors)", Pattern.MULTILINE)
-    private val BuildWarningsPattern = Pattern.compile("(\\d+)(?= warnings)", Pattern.MULTILINE)
-    private val SuccessPattern = Pattern.compile("(no errors and no warnings)", Pattern.MULTILINE)
-    private val TestSuccessPattern = Pattern.compile("(Failed: 0)", Pattern.MULTILINE)
 
     override fun applyFilter(line: String, entireLength: Int): Filter.Result? {
 

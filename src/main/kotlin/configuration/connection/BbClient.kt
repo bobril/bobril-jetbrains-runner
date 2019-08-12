@@ -1,18 +1,18 @@
 package configuration.connection
 
-import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.node.ArrayNode
-import configuration.connection.data.*
-import org.omg.CORBA.Object
-import java.util.*
+import configuration.connection.data.AgentData
+import configuration.connection.data.CompilationFinishedData
+import configuration.connection.data.FocusPlaceData
+import configuration.connection.data.TestData
 import java.io.BufferedReader
+import java.io.DataOutputStream
 import java.io.InputStreamReader
 import java.net.HttpURLConnection
-import java.io.DataOutputStream
 import java.net.URL
+import java.util.*
 import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
 
 
 class BbClient(private val url: String): TimerTask() {
@@ -62,7 +62,7 @@ class BbClient(private val url: String): TimerTask() {
                 connection.disconnect()
             }
         } catch(exception: Exception) {
-            System.out.println("Error:" + exception.message)
+            println("Error:" + exception.message)
             exception.printStackTrace()
         } finally {
             this.connection = null
@@ -117,8 +117,6 @@ class BbClient(private val url: String): TimerTask() {
     }
 
     private fun processResponse(response: String) {
-        System.out.println(response)
-
         val objectMapper = ObjectMapper()
 
         val bbResponse1 = objectMapper.readTree(response)
@@ -157,46 +155,6 @@ class BbClient(private val url: String): TimerTask() {
                 }
             }
         }
-
-/*
-        if (bbResponse.close == true) {
-            this.id = null
-            return
-        }
-
-        bbResponse.m.forEach {
-            when (it.m) {
-                "compilationStarted" -> onCompilationStartedListeners.forEach { it() }
-                "compilationFinished" -> {
-                    val compilationFinishedResponse = objectMapper.readValue<BbResponse<BbMessageWithData<CompilationFinishedData>>>(response, compilationFinishedResponseTypeRef)
-                    val data = compilationFinishedResponse.m[0].d
-                    if (data != null) {
-                        onCompilationFinishedListeners.forEach {  it(data) }
-                    }
-                }
-                "focusPlace" -> {
-                    val focusPlaceResponse = objectMapper.readValue<BbResponse<BbMessageWithData<FocusPlaceData>>>(response, focusPlaceResponseTypeRef)
-                    val data = focusPlaceResponse.m[0].d
-                    if (data != null) {
-                        onFocusPlaceListeners.forEach {  it(data) }
-                    }
-                }
-                "testUpdated" -> {
-                    val testUpdatedResponse = objectMapper.readValue<BbResponse<BbMessageWithData<TestData>>>(response, testUpdatedResponseTypeRef)
-                    val agentData = testUpdatedResponse.m[0].d?.agents?.firstOrNull()
-                    if (agentData != null) {
-                        onTestUpdatedListeners.forEach {  it(agentData) }
-                    }
-                }
-            }
-        }*/
-    }
-
-    companion object {
-        val bbResponseTypeRef =  object : TypeReference<BbResponse<HashMap<String, Object>>>() {}
-//        val compilationFinishedResponseTypeRef =  object : TypeReference<BbResponse<BbMessageWithData<CompilationFinishedData>>>() {}
-//        val focusPlaceResponseTypeRef =  object : TypeReference<BbResponse<BbMessageWithData<FocusPlaceData>>>() {}
-        val testUpdatedResponseTypeRef =  object : TypeReference<TestData>() {}
     }
 }
 

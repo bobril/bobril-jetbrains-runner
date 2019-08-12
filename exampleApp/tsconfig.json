@@ -25,7 +25,7 @@
     "resolveJsonModule": true
   },
   "files": [
-    "C:/Users/Admin/.bbcore/tools/jasmine330.d.ts"
+    "C:/Users/m.base/.bbcore/tools/jasmine330.d.ts"
   ],
   "include": [
     "**/*"

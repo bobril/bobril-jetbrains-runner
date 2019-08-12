@@ -1,4 +1,5 @@
 import { Game } from '../src/game';
+import * as b from 'bobril';
 import { ICell } from '../src/model/cell';
 import { createWorldFactoryMock } from './model/worldFactory.mock';
 import { createWorldMock, IWorldMock } from './model/world.mock';
@@ -9,6 +10,7 @@ describe('Game', () => {
     let currentWorld: IWorldMock;
     let nextIterationWorld: IWorldMock;
     let game: Game;
+    let testSpy: Jasmine.spy
 
     beforeEach(() => {
         currentCell = createCellMock('currentCell');
@@ -18,6 +20,7 @@ describe('Game', () => {
         game = new Game(createWorldFactoryMock(currentWorld, nextIterationWorld));
         currentWorld.getDeadNeighbors.and.returnValue([]);
         currentWorld.getLiveNeighbors.and.returnValue([]);
+        testSpy = spyOn(b, "createComponent");
     });
 
     describe('getLiveCells', () => {
@@ -27,11 +30,20 @@ describe('Game', () => {
             expect(game.getLiveCells()).toEqual([liveCell]);
         });
 
-        it('getLiveCells will return values from nextIterationWorld after move', () => {
+        it('getLiveCells will return values from nextIteratinorld adfer move', () => {
             let nextIterationLiveCell = createCellMock('nextIterationLiveCell');
             nextIterationWorld.getLiveCells.and.returnValue([nextIterationLiveCell]);
             game.move();
-            expect(game.getLiveCells()).toEqual([nextIterationLiveCell]);
+            expect(game.getLiveCells()).toEqual([nextIterationLiveCell, nextIterationLiveCell]);
+        });
+
+        it('spy falling test', () => {
+            expect(testSpy).toHaveBeenCalled();
+        });
+
+        it('spy not falling test', () => {
+            b.createComponent({});
+            expect(testSpy).not.toHaveBeenCalled();
         });
     });
 
@@ -108,7 +120,7 @@ describe('Game', () => {
             it('Dead cell with more than tree neighbors will remain dead', () => {
                 currentWorld.getLiveCells.and.returnValue(createCellsMock(4));
                 game.move();
-                expect(currentWorld.addLiveCell).not.toHaveBeenCalledWith(deadCell);
+                expect(currentWorld.addLiveCell).toHaveBeenCalledWith(deadCell);
             });
         });
     });

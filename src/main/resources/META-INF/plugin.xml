@@ -10,6 +10,10 @@
 
     <depends>com.intellij.modules.lang</depends>
     <extensions defaultExtensionNs="com.intellij">
+        <applicationService serviceInterface="services.JasmineService" serviceImplementation="services.impl.JasmineServiceImpl"/>
         <configurationType implementation="configuration.BbRunConfigurationType"/>
+        <annotator language="" implementationClass="configuration.annotators.JasmineAnnotator"/>
     </extensions>
+    <project-components>
+    </project-components>
 </idea-plugin>

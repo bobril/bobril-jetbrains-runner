@@ -2,10 +2,10 @@ package configuration
 
 import com.intellij.execution.process.ProcessEvent
 import com.intellij.execution.process.ProcessListener
-import com.intellij.openapi.components.ServiceManager
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.util.Key
 import configuration.connection.BbClient
+import configuration.messageHandlers.BbMessageHandler
 import java.util.*
 import java.util.regex.Pattern
 
@@ -29,7 +29,6 @@ class BbProcessListener(project: Project): ProcessListener {
     }
 
     override fun onTextAvailable(event: ProcessEvent, outputType: Key<*>) {
-        println("onTextAvailable : ${event.text}")
         val matcher = PATTERN.matcher(event.text)
         if (matcher.find()) {
             val bbClient = BbClient("${matcher.group(0)}bb/api/main")
