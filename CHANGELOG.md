@@ -1,3 +1,15 @@
+## 0.2.1
+
+### Fixed
+
+- Persist custom project root
+
+## 0.2.0
+
+### Added
+
+- show jasmine test result in code
+
 ## 0.1.0
 
 ### Changed

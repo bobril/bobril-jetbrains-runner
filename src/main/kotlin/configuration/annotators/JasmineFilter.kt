@@ -35,6 +35,7 @@ class JasmineFilter(regex: String) {
             if (endOffset > startOffset) endOffset else startOffset + 1
         )
 
-        holder.createErrorAnnotation(range, error)
+        val annotation = holder.createErrorAnnotation(range, error)
+        annotation.setNeedsUpdateOnTyping(true)
     }
 }

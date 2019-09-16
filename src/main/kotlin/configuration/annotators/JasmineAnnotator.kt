@@ -13,7 +13,6 @@ class JasmineAnnotator : Annotator {
     )
 
     override fun annotate(element: PsiElement, holder: AnnotationHolder) {
-        println("JasmineAnnotator")
         val jasmineService = ServiceManager.getService(JasmineService::class.java)
         val jasmineData = jasmineService.getJasmineData()?: return
         val nameRegex = Regex(element.containingFile.name);

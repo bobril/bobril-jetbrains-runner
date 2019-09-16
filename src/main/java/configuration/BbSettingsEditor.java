@@ -22,7 +22,7 @@ public class BbSettingsEditor extends SettingsEditor<BbRunConfiguration> {
 
     @Override
     protected void resetEditorFrom(@NotNull BbRunConfiguration configuration) {
-        configuration.setCustomProjectRoot(null);
+        projectRoot.setText(configuration.getCustomProjectRoot());
     }
 
     @Override

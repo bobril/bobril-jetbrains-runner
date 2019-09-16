@@ -7,7 +7,7 @@ import com.intellij.openapi.project.Project
 
 class BbConfigurationFactory constructor(type: ConfigurationType) : ConfigurationFactory(type) {
     override fun createTemplateConfiguration(project: Project): RunConfiguration {
-        return BbRunConfiguration(project, this, "Bb")
+        return BbRunConfiguration(project, this, "bb")
     }
 
     override fun getName(): String {
