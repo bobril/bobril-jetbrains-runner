@@ -14,7 +14,8 @@ import configuration.filters.BbCompileFilter
 class BbRunProfileState(environment: ExecutionEnvironment, private val project: Project, private val configuration: BbRunConfiguration): CommandLineState(environment) {
     override fun startProcess(): ProcessHandler {
         val commandLine = GeneralCommandLine(System.getProperty("user.home") + "\\AppData\\Roaming\\npm\\bb.cmd")
-        commandLine.withWorkDirectory(configuration.customProjectRoot ?: project.basePath)
+        val projectRoot = if (configuration.customProjectRoot.isNullOrEmpty()) project.basePath else configuration.customProjectRoot
+        commandLine.withWorkDirectory(projectRoot)
         this.addConsoleFilters(UrlFilter())
         this.addConsoleFilters(BbFileFilter(project))
         this.addConsoleFilters(BbTestFilter(project))

@@ -12,7 +12,7 @@ import java.util.regex.Pattern
 class BbFileFilter(private val project: Project) : RegexpFilter(project,
     CONSOLE_FILTER_REGEXP
 ) {
-    private val filePatter = Pattern.compile("([0-9 \\- a-z_A-Z./]+)\\((\\d+),(\\d+)\\)", Pattern.MULTILINE)
+    private val filePatter = Pattern.compile("([0-9 : \\- a-z_A-Z./]+)\\((\\d+),(\\d+)\\)", Pattern.MULTILINE)
 
     override fun applyFilter(line: String, entireLength: Int): Filter.Result? {
 
@@ -38,7 +38,7 @@ class BbFileFilter(private val project: Project) : RegexpFilter(project,
         if (column > 0) column -= 1
         // Calculate the offsets relative to the entire text.
         val highlightStartOffset = entireLength - line.length
-        val highlightEndOffset = highlightStartOffset + filePath.length + lineNumber.length + columnNumber.length + 5
+        val highlightEndOffset = highlightStartOffset + filePath.length + lineNumber.length + columnNumber.length + 3
         val info = createOpenFileHyperlink(filePath, line1, column)
         return Filter.Result(highlightStartOffset, highlightEndOffset, info)
     }
@@ -55,6 +55,5 @@ class BbFileFilter(private val project: Project) : RegexpFilter(project,
 
     companion object {
         private const val CONSOLE_FILTER_REGEXP = RegexpFilter.FILE_PATH_MACROS + "\\(" + RegexpFilter.LINE_MACROS + "," + RegexpFilter.COLUMN_MACROS + "\\):"
-
     }
 }

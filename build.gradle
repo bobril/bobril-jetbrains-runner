@@ -5,7 +5,7 @@ plugins {
 }
 
 group 'com.bobril'
-version '0.2.1'
+version '0.2.2'
 
 sourceCompatibility = 1.8
 
@@ -32,7 +32,7 @@ intellij {
 }
 patchPluginXml {
     changeNotes """
-        Fixed - persist custom project root settign
+        Fixed - Allow empty string in project root, fixed parsing of path in different disk drive
        """
 }
 
