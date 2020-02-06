@@ -1,3 +1,8 @@
+## 0.3.0
+### Added
+- Bundle run configuration - runs bb b with setting, to create a bundle. 
+Can be used in compound configuration to build multiple webs at once (some in debug, some in bundle).
+
 ## 0.2.2
 ### Fixed
 - Allow empty string in project root

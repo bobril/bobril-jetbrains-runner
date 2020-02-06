@@ -5,7 +5,7 @@ plugins {
 }
 
 group 'com.bobril'
-version '0.2.2'
+version '0.3.0'
 
 sourceCompatibility = 1.8
 
@@ -32,7 +32,8 @@ intellij {
 }
 patchPluginXml {
     changeNotes """
-        Fixed - Allow empty string in project root, fixed parsing of path in different disk drive
+        Added- Bundle run configuration - runs bb b with setting, to create a bundle. 
+        Can be used in compound configuration to build multiple webs at once (some in debug, some in bundle).
        """
 }
 
