@@ -7,7 +7,7 @@
   },
   "dependencies": {
     "bobril": "*",
-    "bobril-m": "^0.7.0",
+    "bobril-m": "*",
     "typescript-collections": "*"
   },
   "devDependencies": {},

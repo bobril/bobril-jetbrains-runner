@@ -2,46 +2,33 @@
 # yarn lockfile v1
 
 
-bobril-flex-ie10@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/bobril-flex-ie10/-/bobril-flex-ie10-0.1.0.tgz#feb3aad3fad5c87995960920d76bd49bb607ad94"
-  integrity sha1-/rOq0/rVyHmVlgkg12vUm7YHrZQ=
+bobril-m-icons@*:
+  version "2.1.0"
+  resolved "http://avignon.gmc.net:10004/bobril-m-icons/-/bobril-m-icons-2.1.0.tgz#32f81d515a7faf71f857a2ed1b637ec566f4161f"
+  integrity sha1-MvgdUVp/r3H4V6LtG2N+xWb0Fh8=
   dependencies:
     bobril "*"
 
-bobril-m-icons@^1.0.0:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/bobril-m-icons/-/bobril-m-icons-1.1.1.tgz#d2c97d1e3aa177eb2132338622375939ad6a8e3d"
-  integrity sha1-0sl9Hjqhd+shMjOGIjdZOa1qjj0=
+bobril-m@*:
+  version "0.15.1"
+  resolved "http://avignon.gmc.net:10004/bobril-m/-/bobril-m-0.15.1.tgz#0e49d20a509be49d054450c0e3d779044327a10d"
+  integrity sha512-6q550avg1vHNL4R8Fir1/Z4/3g2qmtRcliXlqfGUOzbl89y26CCLHhHl3iAA3WtQidOyEoDfCa3oV1oi1KiQCQ==
   dependencies:
     bobril "*"
-
-bobril-m@^0.7.0:
-  version "0.7.0"
-  resolved "https://registry.yarnpkg.com/bobril-m/-/bobril-m-0.7.0.tgz#f30b6894c828889efe4c0b7b98869e04bfb08914"
-  integrity sha1-8wtolMgoiJ7+TAt7mIaeBL+wiRQ=
-  dependencies:
-    bobril "^4.39.0"
-    bobril-flex-ie10 "^0.1.0"
-    bobril-m-icons "^1.0.0"
+    bobril-m-icons "*"
     webfontloader "^1.6.21"
 
 bobril@*:
-  version "12.0.0"
-  resolved "https://registry.yarnpkg.com/bobril/-/bobril-12.0.0.tgz#5d81b00b54c7d20ac3a5b45a124fc1ed5be5bb76"
-  integrity sha512-ONuQa6casgOxzcneH1bXQBemHt3i4wrM0EOIRkDEmMQULdu1IaC506Te+LxuidvYx3bmgdDquoDxZR0mIAudbw==
-
-bobril@^4.39.0:
-  version "4.49.2"
-  resolved "https://registry.yarnpkg.com/bobril/-/bobril-4.49.2.tgz#b4748f520f5d3ba797929e132675b9cb3aef4aab"
-  integrity sha1-tHSPUg9dO6eXkp4TJnW5yzrvSqs=
+  version "14.1.1"
+  resolved "http://avignon.gmc.net:10004/bobril/-/bobril-14.1.1.tgz#51fc3a0f0927b5ccb7b89377d776ac6c7f5e8cdf"
+  integrity sha512-4c3lcdfqKOvKamnBEI4eITvMq2AzbAdZFlIRZti2asKa4Mr/RoX10QB7Yh9bDMsDYsDQAfdDAznLjcB4JeOKWQ==
 
 typescript-collections@*:
-  version "1.3.2"
-  resolved "https://registry.yarnpkg.com/typescript-collections/-/typescript-collections-1.3.2.tgz#b2476373d2976eb3dc8be931292a20a30d23677d"
-  integrity sha512-Frfvtwym0VebbueXWEJlVkGiWjKEFStsRwusuzjh8lX8OEJ9ZbFqpYLNfPvZcxw/+nqW0cRNBeBq6SVoTjymcQ==
+  version "1.3.3"
+  resolved "http://avignon.gmc.net:10004/typescript-collections/-/typescript-collections-1.3.3.tgz#62d50d93c018c094d425eabee649f00ec5cc0fea"
+  integrity sha512-7sI4e/bZijOzyURng88oOFZCISQPTHozfE2sUu5AviFYk5QV7fYGb6YiDl+vKjF/pICA354JImBImL9XJWUvdQ==
 
 webfontloader@^1.6.21:
   version "1.6.28"
-  resolved "https://registry.yarnpkg.com/webfontloader/-/webfontloader-1.6.28.tgz#db786129253cb6e8eae54c2fb05f870af6675bae"
+  resolved "http://avignon.gmc.net:10004/webfontloader/-/webfontloader-1.6.28.tgz#db786129253cb6e8eae54c2fb05f870af6675bae"
   integrity sha1-23hhKSU8tujq5UwvsF+HCvZnW64=

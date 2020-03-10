@@ -17,9 +17,10 @@
         <annotator language="" implementationClass="configuration.annotators.JasmineAnnotator"/>
     </extensions>
     <actions>
-        <group id="actions.BbActionGroup" text="Bobril" popup="true" class="actions.BbActionGroup">
-            <add-to-group group-id="ToolsMenu" anchor="after" relative-to-action="org.intellij.sdk.action.PopupDialogAction"/>
-        </group>
+        <action id="actions.SetCoverageAction" class="actions.SetCoverageAction"
+                text="Set Coverage" description="Set coverage">
+            <add-to-group group-id="ToolsMenu" anchor="first"/>
+        </action>
     </actions>
     <project-components>
     </project-components>

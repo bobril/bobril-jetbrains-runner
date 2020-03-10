@@ -13,6 +13,7 @@ import org.jetbrains.annotations.NotNull
 
 class BbRunConfiguration(project: Project, factory: ConfigurationFactory, name: String) : RunConfigurationBase<String>(project, factory, name) {
     var customProjectRoot: String? = null
+    var codeCoverage: Boolean = false;
     var bundle: Boolean = false
     var fast: Boolean = true
     var newBundler: Boolean = true
@@ -38,6 +39,7 @@ class BbRunConfiguration(project: Project, factory: ConfigurationFactory, name: 
         mangle = JDOMExternalizerUtil.readField(element, KEY_MANGLE)?.toBoolean() ?: false
         beautify = JDOMExternalizerUtil.readField(element, KEY_BEAUTIFY)?.toBoolean() ?: false
         newBundler = JDOMExternalizerUtil.readField(element, KEY_NEW_BUNDLER)?.toBoolean() ?: false
+        codeCoverage = JDOMExternalizerUtil.readField(element, KEY_CODE_COVEAGE)?.toBoolean() ?: false
     }
 
     override fun writeExternal(element: Element) {
@@ -45,6 +47,7 @@ class BbRunConfiguration(project: Project, factory: ConfigurationFactory, name: 
         JDOMExternalizerUtil.writeField(element, KEY_CUSTOM_PROJECT_ROOT, customProjectRoot)
         JDOMExternalizerUtil.writeField(element, KEY_BUNDLE, bundle.toString())
         JDOMExternalizerUtil.writeField(element, KEY_NEW_BUNDLER, newBundler.toString())
+        JDOMExternalizerUtil.writeField(element, KEY_CODE_COVEAGE, codeCoverage.toString())
         JDOMExternalizerUtil.writeField(element, KEY_FAST, fast.toString())
         JDOMExternalizerUtil.writeField(element, KEY_COMPRESS, compress.toString())
         JDOMExternalizerUtil.writeField(element, KEY_MANGLE, mangle.toString())
@@ -59,5 +62,6 @@ class BbRunConfiguration(project: Project, factory: ConfigurationFactory, name: 
         val KEY_COMPRESS = "COMPRESS"
         val KEY_MANGLE = "MANGLE"
         val KEY_BEAUTIFY = "BEAUTIFY"
+        val KEY_CODE_COVEAGE = "CODE_COVEAGE"
     }
 }

@@ -14,6 +14,7 @@ import configuration.connection.data.AgentData
 import configuration.connection.data.CompilationFinishedData
 import configuration.connection.data.FocusPlaceData
 import configuration.connection.data.SuiteData
+import services.CoverageService
 import services.JasmineService
 import java.io.File
 
@@ -31,6 +32,7 @@ class BbMessageHandler(private val project: Project) {
         bbClient.addOnCompilationFinished { onCompilationFinished(it) }
         bbClient.addTestUpdated { onTestUpdated(it) }
         bbClient.addOnFocusPlace { onFocusPlace(it) }
+        bbClient.addCoverageUpdatedListener { onCoverageUpdated() }
     }
 
     private fun onCompilationStarted() {
@@ -55,6 +57,12 @@ class BbMessageHandler(private val project: Project) {
                 OpenFileDescriptor(project, file, data.pos[0] - 1, data.pos[1] - 1).navigate(true)
             }, ModalityState.NON_MODAL)
         }
+    }
+
+    private fun onCoverageUpdated() {
+        println("Coverage updated")
+        val coverageService = ServiceManager.getService(CoverageService::class.java)
+        coverageService.displayHandler?.updateDisplays()
     }
 
     private fun setFailureTests(agentData: AgentData) {

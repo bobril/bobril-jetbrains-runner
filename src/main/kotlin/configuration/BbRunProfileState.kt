@@ -6,10 +6,15 @@ import com.intellij.execution.filters.UrlFilter
 import com.intellij.execution.process.ColoredProcessHandler
 import com.intellij.execution.process.ProcessHandler
 import com.intellij.execution.runners.ExecutionEnvironment
+import com.intellij.openapi.components.ServiceManager
+import com.intellij.openapi.fileEditor.FileEditorManagerListener
 import com.intellij.openapi.project.Project
 import configuration.filters.BbCompileFilter
 import configuration.filters.BbFileFilter
 import configuration.filters.BbTestFilter
+import coverage.DisplayHandler
+import listeners.CodeCoverageFileListener
+import services.CoverageService
 
 class BbRunProfileState(environment: ExecutionEnvironment, private val project: Project, private val configuration: BbRunConfiguration): CommandLineState(environment) {
     override fun startProcess(): ProcessHandler {
@@ -22,6 +27,17 @@ class BbRunProfileState(environment: ExecutionEnvironment, private val project: 
         val colored = ColoredProcessHandler(commandLine)
         colored.addProcessListener(BbProcessListener(project))
         colored.startNotify()
+
+        val coverageService = ServiceManager.getService(CoverageService::class.java)
+        val displayHandler = DisplayHandler(project)
+        displayHandler.initializeMap()
+        displayHandler.updateDisplays()
+        coverageService.displayHandler = displayHandler
+
+        project.messageBus.connect(project).subscribe(FileEditorManagerListener.FILE_EDITOR_MANAGER, CodeCoverageFileListener(displayHandler))
+
+//        EditorFactory.getInstance().eventMulticaster.addDocumentListener(CoverageDisplay())
+
         return colored
     }
 }

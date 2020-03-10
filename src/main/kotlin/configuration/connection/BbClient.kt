@@ -2,10 +2,7 @@ package configuration.connection
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.node.ArrayNode
-import configuration.connection.data.AgentData
-import configuration.connection.data.CompilationFinishedData
-import configuration.connection.data.FocusPlaceData
-import configuration.connection.data.TestData
+import configuration.connection.data.*
 import java.io.BufferedReader
 import java.io.DataOutputStream
 import java.io.InputStreamReader
@@ -15,14 +12,16 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
-class BbClient(private val url: String): TimerTask() {
-    private var connection: HttpURLConnection? = null
+class BbClient(private val host: String): TimerTask() {
+    private var longPoolingConnection: HttpURLConnection? = null
     private var id: String? = null
     private val onCompilationStartedListeners = ArrayList<() -> Unit>()
     private val onCompilationFinishedListeners = ArrayList<(data: CompilationFinishedData) -> Unit>()
     private val onFocusPlaceListeners = ArrayList<(data: FocusPlaceData) -> Unit>()
     private val onTestUpdatedListeners = ArrayList<(data: AgentData) -> Unit>()
+    private val onCoverageUpdatedListeners = ArrayList<() -> Unit>()
     private var connectionActive: Boolean = false
+    private var messages = ArrayList<BbMessage<BbMessageValue>>()
 
     fun addOnCompilationStarted(listener: () -> Unit) {
         onCompilationStartedListeners.add(listener)
@@ -40,9 +39,13 @@ class BbClient(private val url: String): TimerTask() {
         onTestUpdatedListeners.add(listener)
     }
 
+    fun addCoverageUpdatedListener(listener: () -> Unit) {
+        onCoverageUpdatedListeners.add(listener)
+    }
+
     fun terminateConnection() {
         this.connectionActive = false
-        this.connection = null
+        this.longPoolingConnection = null
     }
 
     override fun run() {
@@ -53,9 +56,24 @@ class BbClient(private val url: String): TimerTask() {
         try {
             connectionActive = true
             while (connectionActive) {
-                val connection = connect()?: return
+
+                val messages = arrayListOf<BbMessage<BbMessageValue>>()
+                messages.addAll(this.messages)
+                this.messages.clear()
+
+                val connection = this.createConnection("main")
+                longPoolingConnection = connection
+                this.post(connection, if (messages.size > 0) BbRequest(this.id?: "", messages) else SimpleBbRequest(this.id?: ""))
 
                 val response = getResponse(connection)
+                val responseCode = connection.responseCode
+
+                if (responseCode < 200 || responseCode >= 300) {
+                    println("Response Code : $responseCode")
+                    connectionActive = false
+                    this.id = null
+                    break
+                }
 
                 processResponse(response)
 
@@ -65,22 +83,52 @@ class BbClient(private val url: String): TimerTask() {
             println("Error:" + exception.message)
             exception.printStackTrace()
         } finally {
-            this.connection = null
+            this.longPoolingConnection?.disconnect()
+            this.longPoolingConnection = null
             connectionActive = false
         }
     }
 
-    private fun connect(): HttpURLConnection? {
-        val url = URL(this.url)
+    fun setCoverage(value: Boolean) {
+        messages.add(BbMessage("setCoverage", BbMessageValue(value)))
+        this.longPoolingConnection?.disconnect()
+    }
 
-        this.connection = url.openConnection() as HttpURLConnection
-        val connection = this.connection ?: return null
+    fun getCoverage(file: String): FileCoverageResponse? {
+        try {
+            val connection = this.createConnection("getFileCoverage")
+            this.post(connection, GetFileCoverageRequest(file))
+
+            if (connection.responseCode < 200 || connection.responseCode >= 300) {
+                return null
+            }
+
+            val response = getResponse(connection)
+            val objectMapper = ObjectMapper()
+            return objectMapper.readValue<FileCoverageResponse>(response, FileCoverageResponse::class.java)
+        } catch (exception: Exception) {
+            println("Error:" + exception.message)
+            exception.printStackTrace()
+        }
+
+        return null
+    }
+
+    private fun createConnection(endPoint: String): HttpURLConnection {
+        val url = URL(this.host + "bb/api/" + endPoint)
+        val connection = url.openConnection() as HttpURLConnection
         connection.requestMethod = "POST"
         connection.doOutput = true
         connection.setRequestProperty("Connection", "keep-alive")
         connection.setRequestProperty("Content-Type", "application/json")
+        return connection
+    }
+
+    private fun post(connection: HttpURLConnection, data: Any) {
+        val objectMapper = ObjectMapper()
+
         val wr = DataOutputStream(connection.outputStream)
-        wr.writeBytes("{ \"id\": \"${this.id?:""}\"}")
+        wr.writeBytes(objectMapper.writeValueAsString(data))
         wr.flush()
         wr.close()
 
@@ -89,13 +137,7 @@ class BbClient(private val url: String): TimerTask() {
         if (responseCode < 200 || responseCode >= 300) {
             println("Response Code : $responseCode")
             connection.disconnect()
-            connectionActive = false
-            this.connection = null
-            this.id = null
-            return null
         }
-
-        return connection
     }
 
     private fun getResponse(connection: HttpURLConnection): String {
@@ -152,13 +194,19 @@ class BbClient(private val url: String): TimerTask() {
                             onTestUpdatedListeners.forEach {  it(agentData) }
                         }
                     }
+                    "coverageUpdated" -> {
+                        onCoverageUpdatedListeners.forEach {  it() }
+                    }
                 }
             }
         }
     }
 }
 
-
+private class GetFileCoverageRequest(val fileName: String)
+private class BbRequest(val id: String, val m: ArrayList<BbMessage<BbMessageValue>>?)
+private class SimpleBbRequest(val id: String)
+private class BbMessageValue(val value: Boolean)
 
 
 
