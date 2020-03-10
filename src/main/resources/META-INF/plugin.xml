@@ -17,8 +17,8 @@
         <annotator language="" implementationClass="configuration.annotators.JasmineAnnotator"/>
     </extensions>
     <actions>
-        <group id="actions.BbActionGroup" text="Bobril" popup="true" class="actions.BbActionGroup">
-            <add-to-group group-id="ToolsMenu" anchor="after" relative-to-action="org.intellij.sdk.action.PopupDialogAction"/>
+        <group id="actions.BbActionGroup" text="Bobril" popup="true" class="actions.BbActionGroup" icon="/images/bobril-small.png">>
+            <add-to-group group-id="ToolbarRunGroup" anchor="after" relative-to-action="Stop"/>
         </group>
     </actions>
     <project-components>

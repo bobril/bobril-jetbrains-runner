@@ -32,6 +32,10 @@ class DisplayHandler(private val project: Project) {
     }
 
     fun addDisplayForEditor(editor: Editor, file: VirtualFile) {
+        if (file.path.contains("spec")) {
+            return
+        }
+
         removeDisplayForFile(file)
         val display = CoverageDisplay(editor)
         editor.document.addDocumentListener(display)

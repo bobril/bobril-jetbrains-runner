@@ -65,13 +65,13 @@ class CoverageDisplay(private val editor: Editor) : DocumentListener {
 
             val color = when (covType) {
                 0 -> {
-                    Color.RED
+                    Color(162, 14, 31, 120)
                 }
                 1 -> {
                     Color.ORANGE
                 }
                 else -> {
-                    Color.GREEN
+                    Color(30, 130, 33, 120)
                 }
             }
 

@@ -32,8 +32,7 @@ intellij {
 }
 patchPluginXml {
     changeNotes """
-        Added- Bundle run configuration - runs bb b with setting, to create a bundle. 
-        Can be used in compound configuration to build multiple webs at once (some in debug, some in bundle).
+        Added- code coverage - new toolbar in run configuration section with possibility to toggle code coverage and line coverage
        """
 }
 

@@ -8,7 +8,7 @@ import services.BbClientService
 class BbActionGroup(): DefaultActionGroup() {
     override fun update(e: AnActionEvent) {
         super.update(e)
-                val bbService = ServiceManager.getService(BbClientService::class.java)
+        val bbService = ServiceManager.getService(BbClientService::class.java)
         e.presentation.isEnabledAndVisible = bbService.getBbClient() != null
 
         if (this.childActionsOrStubs.isEmpty()) {

@@ -56,9 +56,9 @@ class CoverageHighlighter(private val editor: Editor) {
     }
 
     private fun getOffset(document: Document, line: Int, charOffset: Int): Int {
-        val toLineStartOffset = document.getLineStartOffset(max(0, line - 1))
-        val toLineEndOffset = document.getLineEndOffset(max(0, line - 1))
+        val toLineStartOffset = document.getLineStartOffset(max(0, line))
+        val toLineEndOffset = document.getLineEndOffset(max(0, line))
         val toLineLength = toLineEndOffset - toLineStartOffset
-        return toLineStartOffset + min(toLineLength, charOffset + 1)
+        return toLineStartOffset + min(toLineLength, charOffset)
     }
 }
