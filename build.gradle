@@ -5,7 +5,7 @@ plugins {
 }
 
 group 'com.bobril'
-version '0.4.0'
+version '0.4.1'
 
 sourceCompatibility = 1.8
 
@@ -32,7 +32,7 @@ intellij {
 }
 patchPluginXml {
     changeNotes """
-        Added- code coverage - new toolbar in run configuration section with possibility to toggle code coverage and line coverage
+        Fixed - support Linux
        """
 }
 

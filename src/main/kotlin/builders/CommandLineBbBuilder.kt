@@ -3,14 +3,20 @@ package builders
 import com.intellij.execution.configurations.GeneralCommandLine
 import com.intellij.openapi.project.Project
 import configuration.BbRunConfiguration
+import org.apache.commons.lang.SystemUtils
 
 class CommandLineBbBuilder(private val configuration: BbRunConfiguration, private val project: Project) {
-    private val commandLine = GeneralCommandLine(System.getProperty("user.home") + "\\AppData\\Roaming\\npm\\bb.cmd")
+    private val commandLine: GeneralCommandLine = if (SystemUtils.IS_OS_WINDOWS)
+        GeneralCommandLine(System.getProperty("user.home") + "\\AppData\\Roaming\\npm\\bb.cmd")
+    else
+        GeneralCommandLine("\\usr\\local\\node\\bin\\bb")
 
-    fun build(): GeneralCommandLine {
+    init {
         val projectRoot = if (configuration.customProjectRoot.isNullOrEmpty()) project.basePath else configuration.customProjectRoot
         commandLine.withWorkDirectory(projectRoot)
+    }
 
+    fun build(): GeneralCommandLine {
         if (!configuration.bundle) {
             return commandLine
         }
