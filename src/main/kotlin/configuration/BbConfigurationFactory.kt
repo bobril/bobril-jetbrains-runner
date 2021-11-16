@@ -14,7 +14,11 @@ class BbConfigurationFactory constructor(type: ConfigurationType) : Configuratio
         return FACTORY_NAME
     }
 
+    override fun getId(): String {
+        return FACTORY_NAME
+    }
+
     companion object {
-        private val FACTORY_NAME = "Demo configuration factory"
+        private val FACTORY_NAME = "BobrilRunnerConfiguration"
     }
 }

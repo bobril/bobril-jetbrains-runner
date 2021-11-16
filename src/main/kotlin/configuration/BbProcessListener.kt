@@ -2,7 +2,7 @@ package configuration
 
 import com.intellij.execution.process.ProcessEvent
 import com.intellij.execution.process.ProcessListener
-import com.intellij.openapi.components.ServiceManager
+import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.util.Key
 import configuration.connection.BbClient
@@ -21,7 +21,7 @@ class BbProcessListener(project: Project): ProcessListener {
 
     override fun processWillTerminate(event: ProcessEvent, willBeDestroyed: Boolean) {
         println("processWillTerminate : ${event.text}")
-        val bbService: BbClientService = ServiceManager.getService(BbClientService::class.java)
+        val bbService: BbClientService = ApplicationManager.getApplication().getService(BbClientService::class.java)
         bbService.getBbClient()?.terminateConnection()
         timer?.cancel()
     }
@@ -34,7 +34,7 @@ class BbProcessListener(project: Project): ProcessListener {
         val matcher = PATTERN.matcher(event.text)
         if (matcher.find()) {
             val bbClient = BbClient(matcher.group(0))
-            val bbService = ServiceManager.getService(BbClientService::class.java)
+            val bbService = ApplicationManager.getApplication().getService(BbClientService::class.java)
             bbService.setBbClient(bbClient)
             bbMessageHandler.handleClient(bbClient)
             timer = Timer()

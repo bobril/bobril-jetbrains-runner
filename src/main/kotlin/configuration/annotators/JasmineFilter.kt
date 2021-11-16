@@ -1,6 +1,7 @@
 package configuration.annotators
 
 import com.intellij.lang.annotation.AnnotationHolder
+import com.intellij.lang.annotation.HighlightSeverity
 import com.intellij.openapi.util.TextRange
 import com.intellij.openapi.util.text.StringUtil
 import com.intellij.psi.PsiElement
@@ -35,7 +36,9 @@ class JasmineFilter(regex: String) {
             if (endOffset > startOffset) endOffset else startOffset + 1
         )
 
-        val annotation = holder.createErrorAnnotation(range, error)
-        annotation.setNeedsUpdateOnTyping(true)
+        holder.newAnnotation(HighlightSeverity.ERROR, error)
+            .range(range)
+            .needsUpdateOnTyping()
+            .create()
     }
 }

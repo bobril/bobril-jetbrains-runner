@@ -21,7 +21,7 @@ export const Canvas = b.createComponent<ICanvasData>({
     me.children = {
       tag: "svg",
       style: { width: "100%", height: "100%", fill: "transparent" },
-      children: ctx.data.lifeCels.map((cell: Cell) => {
+      children: ctx.data.lifeCels.map((cell: ICell) => {
         let position = ctx.cellPositonConverter.getPostionFromCell(cell);
         return {
           tag: "rect",

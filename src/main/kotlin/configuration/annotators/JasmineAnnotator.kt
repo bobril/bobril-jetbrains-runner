@@ -2,7 +2,7 @@ package configuration.annotators
 
 import com.intellij.lang.annotation.AnnotationHolder
 import com.intellij.lang.annotation.Annotator
-import com.intellij.openapi.components.ServiceManager
+import com.intellij.openapi.application.ApplicationManager
 import com.intellij.psi.PsiElement
 import services.JasmineService
 
@@ -13,7 +13,7 @@ class JasmineAnnotator : Annotator {
     )
 
     override fun annotate(element: PsiElement, holder: AnnotationHolder) {
-        val jasmineService = ServiceManager.getService(JasmineService::class.java)
+        val jasmineService = ApplicationManager.getApplication().getService(JasmineService::class.java)
         val jasmineData = jasmineService.getJasmineData()?: return
         val nameRegex = Regex(element.containingFile.name);
         val textLines = element.text.split("\n")

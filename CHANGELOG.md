@@ -1,3 +1,7 @@
+## 0.4.2
+### Fixed
+- Compatibility with new versions
+
 ## 0.3.0
 ### Added
 - Bundle run configuration - runs bb b with setting, to create a bundle. 

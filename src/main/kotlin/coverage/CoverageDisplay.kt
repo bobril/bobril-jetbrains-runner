@@ -1,7 +1,6 @@
 package coverage
 
 import com.intellij.openapi.application.ApplicationManager
-import com.intellij.openapi.components.ServiceManager
 import com.intellij.openapi.editor.Editor
 import com.intellij.openapi.editor.event.DocumentEvent
 import com.intellij.openapi.editor.event.DocumentListener
@@ -27,12 +26,12 @@ class CoverageDisplay(private val editor: Editor) : DocumentListener {
     private fun redrawFileInternal(file: VirtualFile) {
         clearInternal()
 
-        val bbService = ServiceManager.getService(BbClientService::class.java)
+        val bbService = ApplicationManager.getApplication().getService(BbClientService::class.java)
         val client = bbService.getBbClient()?: return
         val coverage = client.getCoverage(file.path)
 
         println("coverage: $coverage")
-        val coverageService = ServiceManager.getService(CoverageService::class.java)
+        val coverageService = ApplicationManager.getApplication().getService(CoverageService::class.java)
         coverageService.setCoverage(file.path, coverage)
 
         val ranges = coverage?.ranges?: return

@@ -1,11 +1,11 @@
 plugins {
+    id 'org.jetbrains.intellij' version '1.2.1'
+    id 'org.jetbrains.kotlin.jvm' version '1.5.31'
     id 'java'
-    id 'org.jetbrains.intellij' version '0.3.12'
-    id 'org.jetbrains.kotlin.jvm' version '1.3.0'
 }
 
 group 'com.bobril'
-version '0.4.1'
+version '0.4.2'
 
 sourceCompatibility = 1.8
 
@@ -14,29 +14,21 @@ repositories {
 }
 
 dependencies {
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
-    testCompile group: 'junit', name: 'junit', version: '4.12'
-    compile group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.9.4"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib"
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
 }
 
-compileKotlin {
-    kotlinOptions.jvmTarget = "1.8"
-}
-compileTestKotlin {
-    kotlinOptions.jvmTarget = "1.8"
-}
 intellij {
-    version '2019.2'
-    pluginName 'bobril-runner'
-    intellij.updateSinceUntilBuild false //Disables updating since-build attribute in plugin.xml
+    version = '2021.2.3'
+    pluginName = 'bobril-runner'
+    intellij.updateSinceUntilBuild = false //Disables updating since-build attribute in plugin.xml
+    publishPlugin {
+        token = System.getenv("ORG_GRADLE_PROJECT_intellijPublishToken")
+    }
 }
 patchPluginXml {
-    changeNotes """
-        Fixed - support Linux
-       """
-}
-
-publishPlugin {
-    username intellijPublishUsername
-    password intellijPublishPassword
+    sinceBuild = "201"
+    changeNotes = """
+      Updated to latest intellij"""
 }

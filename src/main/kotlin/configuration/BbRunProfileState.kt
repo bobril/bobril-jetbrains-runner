@@ -6,7 +6,7 @@ import com.intellij.execution.filters.UrlFilter
 import com.intellij.execution.process.ColoredProcessHandler
 import com.intellij.execution.process.ProcessHandler
 import com.intellij.execution.runners.ExecutionEnvironment
-import com.intellij.openapi.components.ServiceManager
+import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.fileEditor.FileEditorManagerListener
 import com.intellij.openapi.project.Project
 import configuration.filters.BbCompileFilter
@@ -28,7 +28,7 @@ class BbRunProfileState(environment: ExecutionEnvironment, private val project: 
         colored.addProcessListener(BbProcessListener(project))
         colored.startNotify()
 
-        val coverageService = ServiceManager.getService(CoverageService::class.java)
+        val coverageService = ApplicationManager.getApplication().getService(CoverageService::class.java)
         val displayHandler = DisplayHandler(project)
         displayHandler.initializeMap()
         displayHandler.updateDisplays()

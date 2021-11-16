@@ -4,6 +4,7 @@ import com.intellij.coverage.CoverageHelper
 import com.intellij.lang.annotation.AnnotationHolder
 import com.intellij.lang.annotation.Annotator
 import com.intellij.lang.annotation.HighlightSeverity
+import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.components.ServiceManager
 import com.intellij.openapi.util.TextRange
 import com.intellij.openapi.util.text.StringUtil
@@ -12,7 +13,7 @@ import services.CoverageService
 
 class CodeCoverageAnnotator : Annotator {
     override fun annotate(element: PsiElement, holder: AnnotationHolder) {
-        val coverageService = ServiceManager.getService(CoverageService::class.java)
+        val coverageService = ApplicationManager.getApplication().getService(CoverageService::class.java)
         val ranges = coverageService.getCoverage(element.containingFile.virtualFile.path)?.ranges?: return
 
         val textLines = element.text.split("\n")
@@ -33,8 +34,10 @@ class CodeCoverageAnnotator : Annotator {
                 if (endOffset > startOffset) endOffset else startOffset + 1
             )
 
-            val annotation = holder.createAnnotation(HighlightSeverity.ERROR, range, "")
-            annotation.setNeedsUpdateOnTyping(true)
+            holder.newAnnotation(HighlightSeverity.INFORMATION, "")
+                .range(range)
+                .needsUpdateOnTyping()
+                .create()
         }
     }
 }

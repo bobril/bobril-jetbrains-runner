@@ -1,6 +1,6 @@
 package coverage
 
-import com.intellij.openapi.components.ServiceManager
+import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.editor.Document
 import com.intellij.openapi.editor.Editor
 import com.intellij.openapi.editor.markup.HighlighterTargetArea
@@ -19,7 +19,7 @@ class CoverageHighlighter(private val editor: Editor) {
         if (toLine <= document.lineCount) {
             val attributes = TextAttributes()
             val highlighter = createRangeHighlighter(fromLine, toLine, fromChar, toChar, attributes)
-            val coverageService = ServiceManager.getService(CoverageService::class.java)
+            val coverageService = ApplicationManager.getApplication().getService(CoverageService::class.java)
 
             val highlighters = arrayListOf(SideHighlighter(), ErrorStripeMarkHighlighter())
             if (coverageService.isLineCoverageShown) {

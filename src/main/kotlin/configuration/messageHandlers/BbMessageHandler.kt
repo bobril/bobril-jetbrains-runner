@@ -3,7 +3,6 @@ package configuration.messageHandlers
 import com.intellij.codeInsight.daemon.DaemonCodeAnalyzer
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.application.ModalityState
-import com.intellij.openapi.components.ServiceManager
 import com.intellij.openapi.fileEditor.OpenFileDescriptor
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.LocalFileSystem
@@ -11,7 +10,6 @@ import configuration.Failure
 import configuration.JasmineData
 import configuration.connection.BbClient
 import configuration.connection.data.AgentData
-import configuration.connection.data.CompilationFinishedData
 import configuration.connection.data.FocusPlaceData
 import configuration.connection.data.SuiteData
 import services.CoverageService
@@ -21,7 +19,7 @@ import java.io.File
 
 class BbMessageHandler(private val project: Project) {
     private val jasmineData: JasmineData = JasmineData()
-    private val bbService: JasmineService = ServiceManager.getService(JasmineService::class.java)
+    private val bbService: JasmineService = ApplicationManager.getApplication().getService(JasmineService::class.java)
 
     init {
         bbService.setJasmineData(jasmineData)
@@ -29,7 +27,7 @@ class BbMessageHandler(private val project: Project) {
 
     fun handleClient(bbClient: BbClient) {
         bbClient.addOnCompilationStarted { onCompilationStarted() }
-        bbClient.addOnCompilationFinished { onCompilationFinished(it) }
+        bbClient.addOnCompilationFinished { onCompilationFinished() }
         bbClient.addTestUpdated { onTestUpdated(it) }
         bbClient.addOnFocusPlace { onFocusPlace(it) }
         bbClient.addCoverageUpdatedListener { onCoverageUpdated() }
@@ -39,7 +37,7 @@ class BbMessageHandler(private val project: Project) {
         println("CompilationStarted")
     }
 
-    private fun onCompilationFinished(data: CompilationFinishedData) {
+    private fun onCompilationFinished() {
         println("CompilationFinished")
     }
 
@@ -61,7 +59,7 @@ class BbMessageHandler(private val project: Project) {
 
     private fun onCoverageUpdated() {
         println("Coverage updated")
-        val coverageService = ServiceManager.getService(CoverageService::class.java)
+        val coverageService = ApplicationManager.getApplication().getService(CoverageService::class.java)
         coverageService.displayHandler?.updateDisplays()
     }
 

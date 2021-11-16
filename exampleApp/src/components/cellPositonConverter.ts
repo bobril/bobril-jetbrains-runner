@@ -1,4 +1,4 @@
-import { Cell } from "../model/cell2";
+import { ICell, Cell } from "../model/cell2";
 
 export class CellPositonConverter {
   private xOffset: number = 0;
