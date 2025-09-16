@@ -8,8 +8,11 @@ import org.apache.commons.lang.SystemUtils
 class CommandLineBbBuilder(private val configuration: BbRunConfiguration, private val project: Project) {
     private val commandLine: GeneralCommandLine = if (SystemUtils.IS_OS_WINDOWS)
         GeneralCommandLine(System.getProperty("user.home") + "\\AppData\\Roaming\\npm\\bb.cmd")
-    else
-        GeneralCommandLine("\\usr\\local\\node\\bin\\bb")
+    else if (SystemUtils.IS_OS_MAC) {
+        GeneralCommandLine("/usr/local/bin/bb")
+    } else {
+        GeneralCommandLine("/usr/local/node/bin/bb")
+    }
 
     init {
         val projectRoot = if (configuration.customProjectRoot.isNullOrEmpty()) project.basePath else configuration.customProjectRoot

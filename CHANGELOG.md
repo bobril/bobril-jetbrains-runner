@@ -1,3 +1,7 @@
+## 0.4.3
+### Fixed
+- Support Mac OS
+
 ## 0.4.2
 ### Fixed
 - Compatibility with new versions
